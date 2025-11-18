@@ -1,29 +1,22 @@
 # SC-NAS: Stabilizing DARTS via Dual Spectral Normalization
 
-Official code for the arXiv paper: [arXiv link once submitted]  
-**Authors**: Pollob Hussain (Independent Researcher)
+**arXiv:** (coming soon)  
+**Author:** Pollob Hussain (Independent Researcher)  
+**Email:** aikovenv@gmail.com
 
-## Overview
-SC-NAS is a simple, 3-line modification to DARTS that eliminates performance collapse and reduces std dev from 2.14% to 0.12% on CIFAR-10. It uses dual spectral normalization for Lipschitz continuity in bilevel optimization.
+A 3-line fix that reduces DARTS variance from 2.14% → **0.12%** and eliminates collapse.
 
-**Key Results**:
-- CIFAR-10: 97.58% ± 0.12% (10 runs)
-- CIFAR-100: 83.21%
-- ImageNet Top-1: 75.3%
+## Results (10 independent runs)
+| Method      | Mean (%) | Std (%) |
+|-------------|----------|---------|
+| DARTS       | 97.00    | 2.14    |
+| SC-NAS (Ours) | **97.58** | **0.12** |
 
-## Quick Start
-1. Clone: `git clone https://github.com/GPollob/SC-NAS.git`
-2. Install: `pip install -r requirements.txt` (PyTorch 2.0+, torchsn)
-3. Run search: `python search.py --epochs 50`
-4. Reproduce Table 1: `python evaluate_stability.py` (outputs mean/std across 10 seeds)
-
-## Method (3 Lines)
-- Operation-level: `W = W / spectral_norm(W)` in conv layers.
-- Arch-level: `alpha = alpha / norm(alpha, p=2)` before softmax.
-
-## Files
-- `darts.py`: Modified DARTS supernet with SN.
-- `search.py`: Full search script.
-- `evaluate.py`: Retrain discovered arch.
-
-License: MIT (or CC BY 4.0). Questions? Email: aikovenv@gmail.com
+## Usage
+```bash
+git clone https://github.com/GPollob/SC-NAS.git
+cd SC-NAS
+pip install -r requirements.txt
+python search.py --epochs 50
+torch>=2.0
+torchvision
